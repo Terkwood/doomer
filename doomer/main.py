@@ -12,6 +12,7 @@ from doomer import settings
 
 class DoomerBot(commands.Bot):
     def __init__(self):
+        print("HAPPY FRIENDLY TIME")
         intents = discord.Intents.default()
         intents.members = True
         self.models = self.initialize_models()

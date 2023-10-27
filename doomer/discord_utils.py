@@ -1,5 +1,6 @@
 import datetime
 import re
+import sys
 
 from doomer import settings
 
@@ -25,8 +26,16 @@ async def send_message(ctx, messageObj):
     message = str(messageObj)
     messages = [message[i : i + 2000] for i in range(0, len(message), 2000)]
     for m in messages:
-        await ctx.send(m)
-
+        retry = 0
+        happy = False
+        while not happy and retry < 20:
+            try:
+                await ctx.send(m)
+                happy = True
+            except Exception as e:
+                print('failed to send', file=sys.stderr)
+                print(str(e), file=sys.stderr)
+                retry += 1
 
 async def get_channel(ctx, channel_name):
     try:
